@@ -1,65 +1,11 @@
-from flask import Flask, render_template, request, redirect
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from flask import Flask
+from app_support.models.models import db
+from app_support.controllers.controllers import bp
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
-db = SQLAlchemy(app)
-
-
-class Todo(db.Model):  # Initialising model
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=True)
-    date_created = db.Column(db.String(5), default=datetime.utcnow().strftime('%Y-%m-%d | %H:%M'))
-
-
-def __repr__(self):
-    return '<Task %r>' % self.id
-
-
-@app.route("/", methods=['GET', 'POST'])
-def index():  # This function loads the homepage
-    if request.method == "POST":
-        task_content = request.form['content']
-        new_task = Todo(content=task_content)
-
-        try:
-            db.session.add(new_task)
-            db.session.commit()
-            return redirect('/')
-        except:
-            return 'There was an error'
-    else:
-        tasks = Todo.query.order_by(Todo.date_created).all()
-        return render_template('index.html', tasks=tasks)
-
-
-@app.route("/delete/<int:id>")
-def delete(id):  # This function deletes entries
-    task_to_delete = Todo.query.get_or_404(id)
-    try:
-        db.session.delete(task_to_delete)
-        db.session.commit()
-        return redirect('/')
-    except:
-        return "There was a problem with deleting the task"
-
-
-@app.route("/update/<int:id>", methods=['GET', 'POST'])
-def update(id):  # This function updates the entries
-    task_to_delete = Todo.query.get_or_404(id)
-    if request.method == 'GET':
-        return render_template('update.html', task=task_to_delete)
-
-    else:
-        updated_content = request.form['content']
-        task_to_delete.content = updated_content
-        try:
-            db.session.commit()
-            return redirect('/')
-        except:
-            return "There was an error"
-
+db.init_app(app)
+app.register_blueprint(bp)
 
 if __name__ == "__main__":
     app.run(debug=True)
