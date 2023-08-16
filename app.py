@@ -7,7 +7,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 db = SQLAlchemy(app)
 
 
-class Todo(db.Model):
+class Todo(db.Model):  # Initialising model
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable=True)
     date_created = db.Column(db.String(5), default=datetime.utcnow().strftime('%Y-%m-%d | %H:%M'))
@@ -18,7 +18,7 @@ def __repr__(self):
 
 
 @app.route("/", methods=['GET', 'POST'])
-def index():
+def index():  # This function loads the homepage
     if request.method == "POST":
         task_content = request.form['content']
         new_task = Todo(content=task_content)
@@ -35,7 +35,7 @@ def index():
 
 
 @app.route("/delete/<int:id>")
-def delete(id):
+def delete(id):  # This function deletes entries
     task_to_delete = Todo.query.get_or_404(id)
     try:
         db.session.delete(task_to_delete)
@@ -46,7 +46,7 @@ def delete(id):
 
 
 @app.route("/update/<int:id>", methods=['GET', 'POST'])
-def update(id):
+def update(id):  # This function updates the entries
     task_to_delete = Todo.query.get_or_404(id)
     if request.method == 'GET':
         return render_template('update.html', task=task_to_delete)
