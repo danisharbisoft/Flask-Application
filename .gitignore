@@ -2,3 +2,10 @@
 __pycache__/
 *.pyc
 *.pyo
+
+# Ignore database files
+*.db
+
+
+# Ignore directories containing databases
+/flask_app/instance/
