@@ -1,5 +1,5 @@
 //Changing the state of the submit button using javascript
-document.addEventListener('DOMContentLoaded', function ToggleSubmit(){
+document.addEventListener('DOMContentLoaded', () => {
 
     const submitButton = document.querySelector('#submit')
     var content = document.querySelector('#content')
