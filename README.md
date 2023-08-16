@@ -10,11 +10,13 @@ It has the following directories/files:
       .controllers.py
    -models
       .models.py
+   
 3.Static
   -css
     .style.css
   -js
     .script.js
+    
 4.Templates
   -base.html
   -index.html
