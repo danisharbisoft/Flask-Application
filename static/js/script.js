@@ -1,0 +1,19 @@
+document.addEventListener('DOMContentLoaded', function ToggleSubmit(){
+
+    const submitButton = document.querySelector('#submit')
+    var content = document.querySelector('#content')
+
+    function updateSubmitButtonState() {
+        if (content.value.trim() === '') {
+            submitButton.disabled = true;
+        } else {
+            submitButton.disabled = false;
+        }
+    }
+
+    content.addEventListener('input', updateSubmitButtonState);
+
+    updateSubmitButtonState(); // Check the initial state when the page loads
+
+})
+
