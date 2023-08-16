@@ -41,3 +41,11 @@ It has the following directories/files:
         This contains the main code for the app including the model and different routes.
 
   The application uses SQLAlchemy as an ORM library to use SQLite databases using python models.
+
+  SETUP Instructions:
+  -Clone the repository to your system
+  -Create and activate a virtual environment
+  -Download SQLITE or any other SQL program which you wish to work with
+  -Download Flask and flask_sqlalchemy using pip
+  -Initialitise a database
+  -Make changes to the code and send a PR.
