@@ -1,0 +1,16 @@
+body {
+ font-family : sans-serif;
+ color : red;
+ text-align : center;
+}
+
+table {
+  margin: 0 auto;/* Adjust the margin value as needed */
+  border: 1px solid black; /* Add a black border */
+  border-collapse: collapse; /* Collapse the border so it doesn't affect spacing */
+}
+
+table td, table th {
+  border: 1px solid black; /* Add a border to each cell */
+  padding: 10px; /* Add padding inside each cell */
+}
