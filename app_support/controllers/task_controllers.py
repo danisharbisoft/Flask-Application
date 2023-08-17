@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect
 
-from ..models.tasks import db, Todo
+from ..models import db
+from ..models.tasks import Todo
 
 bp = Blueprint('controllers', __name__)  # Using Blueprint for controller file
 

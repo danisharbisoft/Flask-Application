@@ -1,5 +1,5 @@
 from flask import Flask
-from app_support.models.tasks import db
+from app_support.models import db
 from app_support.controllers.task_controllers import bp
 import secrets
 from flask_migrate import Migrate
