@@ -58,5 +58,7 @@ It has the following directories/files:
   -Create and activate a virtual environment
   -Download SQLITE or any other SQL program which you wish to work with
   -Download Flask and flask_sqlalchemy using pip
-  -Initialitise a database
+  -Initialitise a database(For this navigate to the root directory. Switch to the python console. Import app from app and from app_support.models import db. Then run the following commands:
+   with app.app_context():
+      db.create_all
   -Make changes to the code and send a PR.
