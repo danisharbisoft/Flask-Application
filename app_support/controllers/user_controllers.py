@@ -2,7 +2,10 @@ from flask import render_template, request, redirect
 from ..models import db
 from ..models.user import User, RegisterForm, LoginForm
 
-from . import user_controllers_bp
+from flask import Blueprint
+
+# Defining the user_controllers Blueprint
+user_controllers_bp = Blueprint('user_controllers', __name__)
 
 
 @user_controllers_bp.route('/')  # Loads Home Page
@@ -12,7 +15,7 @@ def home():
 
 @user_controllers_bp.route('/login', methods=['POST', 'GET'])
 def login():
-    if request.method == "Post":
+    if request.method == "POST":
         pass
     else:
         form = LoginForm()
