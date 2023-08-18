@@ -1,11 +1,10 @@
 from flask import render_template, request, redirect
-
 from ..models import db
 from ..models.tasks import Todo
-from . import bp
+from . import task_controllers_bp
 
 
-@bp.route("/home", methods=['GET', 'POST'])
+@task_controllers_bp.route("/home", methods=['GET', 'POST'])
 def index():  # This function loads the homepage
     if request.method == "POST":
         task_content = request.form['content']
@@ -22,7 +21,7 @@ def index():  # This function loads the homepage
         return render_template('tasks/index.html', tasks=tasks)
 
 
-@bp.route("/home/delete/<int:id>")
+@task_controllers_bp.route("/home/delete/<int:id>")
 def delete(id):  # This function deletes entries
     task_to_delete = Todo.query.get_or_404(id)
     try:
@@ -33,7 +32,7 @@ def delete(id):  # This function deletes entries
         return render_template('tasks/Error.html')
 
 
-@bp.route("/home/update/<int:id>", methods=['GET', 'POST'])
+@task_controllers_bp.route("/home/update/<int:id>", methods=['GET', 'POST'])
 def update(id):  # This function updates the entries
     task_to_delete = Todo.query.get_or_404(id)
     if request.method == 'GET':
