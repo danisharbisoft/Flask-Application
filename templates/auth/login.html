@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Log In</title>
+{% endblock %}
+
+{% block body %}
+<h1>Please Login</h1>
+<form action="/login" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.username }}
+    {{ form.password }}
+    {{ form.submit }}
+</form>
+
+<h4>Dont have an account? Click Here to Register:</h4>
+<a href='/register'>Register</a>
+{% endblock %}
+
