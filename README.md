@@ -9,10 +9,14 @@ It has the following directories/files:
 
 2. app_support
    -controllers
-      .controllers.py
+       .init.py
+      .task_controllers.py
+      .user_controllers.py
    -models
-      .models.py
-   
+      .init.py
+      .user.py
+      .tasks.py
+    .init.py
 3.Static
   -css
     .style.css
@@ -20,9 +24,16 @@ It has the following directories/files:
     .script.js
     
 4.Templates
-  -base.html
-  -index.html
-  -update.html
+   tasks:
+     -base.html
+     -index.html
+     -error.html
+     -update.html
+
+   auth:
+       -first.html
+       -login.html
+       -register.html
 
 
 1.App.py:
@@ -30,12 +41,23 @@ It has the following directories/files:
 
 2.app_support:
          controllers:
-                    controllers.py:
-                                   This handles application's logic and acts as intermediaries between the model (data) and the view (user interface).
+                    init.py:
+                                   This has the blueprint defined
+                    task_controllers.py:
+                                        This has the controllers for the Todo table
+                     user_controllers.py:
+                                        This has the controllers for the login/register
+                     
           models:
-                  models.py:
-                            This file defines the database model.
-
+               init.py:
+                       This has the database initialised
+              tasks.py:
+                        This has the models for the Todo table
+               user.py:
+                      This has the models for the login/register
+                     
+               
+               
 
 
 3.Static:
@@ -45,12 +67,22 @@ It has the following directories/files:
           Contains Javascript for toggling the submit button
 
 4.Templates:
-          base.html:
-                   Contains the layout for all html files.
-          index.html:
-                    Decides how the main homepage will look
-          update.html:
-                    Decides how the page for updating an entry will look
+          tasks:
+             error.html:
+                        Contains the layout error page
+             base.html:
+                      Contains the layout for all html files.
+             index.html:
+                       Decides how the main homepage will look
+             update.html:
+                       Decides how the page for updating an entry will look
+            auth:
+                 first.html:
+                            This is the first page the user sees when app loads.
+                  login.html:
+                            Layout for login page
+                  register.html:
+                               layout for register page
 
  
   SETUP Instructions:
