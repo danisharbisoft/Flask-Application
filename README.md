@@ -52,9 +52,9 @@ It has the following directories/files:
                init.py:
                        This has the database initialised
               tasks.py:
-                                        This has the models for the Todo table
+                        This has the models for the Todo table
                user.py:
-                                        This has the models for the login/register
+                      This has the models for the login/register
                      
                
                
