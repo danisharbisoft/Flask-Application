@@ -6,8 +6,11 @@ __pycache__/
 # Ignore database files
 *.db
 
-
 # Ignore directories containing databases
 /flask_app/instance/
+
 #Ignoring virtual env
 test_env/
+
+#Igoring migrations
+migrations/

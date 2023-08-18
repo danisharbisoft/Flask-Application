@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect
 from ..models import db
 from ..models.user import User, RegisterForm, LoginForm
-
+from flask_app.app import bcrypt
 from flask import Blueprint
 
 # Defining the user_controllers Blueprint
@@ -24,9 +24,13 @@ def login():
 
 @user_controllers_bp.route('/register', methods=['POST', 'GET'])
 def register():
-    if request.method == "POST":
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data)
+        new_user = User(username=form.username.data, password=form.password.data)
+        db.session.add(new_user)
+        db.session.commit()
         return redirect('/login')
 
-    else:
-        form = RegisterForm()
-        return render_template("/auth/register.html", form=form)
+    return render_template("/auth/register.html", form=form)
