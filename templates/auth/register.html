@@ -12,6 +12,13 @@
     {{ form.username }}
     {{ form.password }}
     {{ form.submit }}
+    {% if form.username.errors %}
+            <ul class="errors">
+                {% for error in form.username.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 </form>
 
 <h4>Already have an account? Click Here to log in:</h4>

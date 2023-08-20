@@ -1,17 +1,21 @@
 from . import db
-from flask_login import UserMixin
 from flask_wtf import FlaskForm
+from flask_login import UserMixin
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):  # Table with user info
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(60), nullable=False)
+    todos = db.relationship('Todo', backref='user', lazy=True)
+
+    def __str__(self):
+        return f"{self.username} {self.password}"
 
 
-class RegisterForm(FlaskForm):
+class RegisterForm(FlaskForm):  # Defining registration form
     username = StringField(
         validators=[
             InputRequired(),
@@ -37,7 +41,7 @@ class RegisterForm(FlaskForm):
             raise ValidationError('Username already exists!')
 
 
-class LoginForm(FlaskForm):
+class LoginForm(FlaskForm):  # Defining login form
     username = StringField(
         validators=[
             InputRequired(),
@@ -55,3 +59,4 @@ class LoginForm(FlaskForm):
     )
 
     submit = SubmitField('Log In')
+
