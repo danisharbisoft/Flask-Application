@@ -50,5 +50,6 @@ The application has the following directories/files:
     ```
 - Run your server
 - Test the app with your TODOs.
+- Run Migrations if you make changes to models.
 - Make changes to the code and send a pull request.
 
