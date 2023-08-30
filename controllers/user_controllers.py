@@ -4,6 +4,7 @@ from flask_app.models.user import User, RegisterForm, LoginForm
 from flask import Blueprint
 from flask_bcrypt import Bcrypt
 from flask_login import login_user, LoginManager, login_required, logout_user
+import user_controllers_utils
 
 # Defining the user_controllers Blueprint
 user_controllers_bp = Blueprint('user_controllers', __name__)
@@ -29,16 +30,21 @@ def home():
 def login():  # Defining login page
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        # Getting username from helper function
+        user = user_controllers_utils.select_user(username=form.username.data)
         if user:
-            if bcrypt.check_password_hash(user.password, form.password.data):
+            # Logging the user by referencing helper function
+            if user_controllers_utils.password_check_for_login(user=user, bcrypt=bcrypt,
+                                                               entered_password=form.password.data):
                 login_user(user)
                 return redirect("/home")
             else:
-                form.username.errors = "Incorrect Password"
+                # Handling errors with helper function
+                form.username.errors = user_controllers_utils.error_handling(type='password')
                 return render_template("/auth/login.html", form=form)
         else:
-            form.username.errors = "User Does not Exist!"
+            # Handling errors with helper function
+            form.username.errors = user_controllers_utils.error_handling(type='user')
             return render_template("/auth/login.html", form=form)
     return render_template("/auth/login.html", form=form)
 
@@ -49,10 +55,8 @@ def register():  # Defining Registration page
     form = RegisterForm()
 
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        new_user = User(username=form.username.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
+        # Handling registration process using helper function
+        user_controllers_utils.create_user(bcrypt, form, db)
         return redirect('/login')
 
     return render_template("/auth/register.html", form=form)
