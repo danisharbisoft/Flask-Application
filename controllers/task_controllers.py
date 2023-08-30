@@ -28,7 +28,7 @@ def index():  # This function loads the homepage
 
 
 @task_controllers_bp.route("/home/delete/<int:id>")
-def delete(id):  # This function deletes entries
+def delete(id: int):  # This function deletes entries
     task_to_delete = Todo.query.get_or_404(id)
     try:
         db.session.delete(task_to_delete)
