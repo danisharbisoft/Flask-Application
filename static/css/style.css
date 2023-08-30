@@ -14,3 +14,13 @@ table td, table th {
   border: 1px solid black; /* Add a border to each cell */
   padding: 10px; /* Add padding inside each cell */
 }
+
+/* Apply styles to all buttons */
+input[type="submit"],input[type="button"]  {
+    background-color: red;
+    color: white;
+    padding: 10px 10px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+}

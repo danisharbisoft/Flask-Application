@@ -1,0 +1,16 @@
+# Ignore Python bytecode files and cache directories
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore database files
+*.db
+
+# Ignore directories containing databases
+/flask_app/instance/
+
+#Ignoring virtual env
+test_env/
+
+#Igoring migrations
+migrations/

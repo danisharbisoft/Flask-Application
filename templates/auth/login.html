@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Log In</title>
+<script src="{{url_for('static', filename='js/user_script.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+<h1>Please Login</h1>
+<form action="/login" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.username }}
+    {{ form.password }}
+    {{ form.submit }}
+       {% if form.username.errors %}
+         <div>{{ form.username.errors }}</div>
+        {% endif %}
+</form>
+
+<h4>Dont have an account? Click Here to Register:</h4>
+<a href='/register'>Register</a>
+{% endblock %}
+

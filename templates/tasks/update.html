@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Update Task</title>
+<script src="{{url_for('static', filename='js/task_script.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+<h1>Update Task</h1>
+<br>
+<form action="/home/update/{{task.id}}" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.content }}
+    {{ form.submit }}
+</form>
+{% endblock %}

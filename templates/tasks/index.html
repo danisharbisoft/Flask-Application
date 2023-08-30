@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Task Master</title>
+<script src="{{url_for('static', filename='js/task_script.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+<h1>Todo App</h1>
+{% if tasks|length<1 %}
+<h3>There aren't any tasks.Please make one from below.</h3>
+
+{% else %}
+<table>
+    <tr>
+        <th>Task</th>
+        <th>Added</th>
+        <th>Actions</th>
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{task.content}}</td>
+        <td>{{task.date_created}}</td>
+        <td><a href="/home/delete/{{task.id}}">Delete</a>
+            <br>
+            <a href="/home/update/{{task.id}}">Update</a>
+        </td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+</table>
+<br>
+<form action="/home" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.content }}
+    {{ form.submit }}
+</form>
+<br>
+<br>
+<a href="/logout">
+    <input type='button' value="Log Out">
+</a>
+
+{% endblock %}

@@ -1,37 +1,42 @@
-from flask import Flask, render_template, request, redirect
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+import secrets
+import os
+import sys
+from flask import Flask
+from flask_app.models import db
+from flask_app.controllers.task_controllers import task_controllers_bp
+from flask_app.controllers.user_controllers import user_controllers_bp, bcrypt, login_manager
+from flask_migrate import Migrate
+from flask_debugtoolbar import DebugToolbarExtension
 
+# Setting up python path
+project_root = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, project_root)
+
+# Registering current project as a flask app
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
-db = SQLAlchemy(app)
 
+# Registering current app within bcrypt
+bcrypt.init_app(app)
 
-class Todo(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=True)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+# Registering the current app with the login manager
+login_manager.init_app(app)
 
-    def __repr__(self):
-        return '<Task %r>' % self.id
+# Configuring the project with SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
 
+# Configuring the app using a secret key for security for protection against CSRF attacks
+app.config['SECRET_KEY'] = secrets.token_hex(16)
 
-@app.route("/", methods=['GET', 'POST'])
-def index():
-    if request.method == "POST":
-        task_content = request.form['content']
-        new_task = Todo(content=task_content)
+# Registering current app in db
+db.init_app(app)
 
-        try:
-            db.session.add(new_task)
-            db.session.commit()
-            return redirect('/')
-        except:
-            return 'There was an error'
-    else:
-        tasks = Todo.query.order_by(Todo.date_created).all()
-        return render_template('index.html', tasks=tasks)
+# Registering blueprints
+app.register_blueprint(user_controllers_bp)
+app.register_blueprint(task_controllers_bp)
 
+# Running migrations
+migrate = Migrate(app, db)
+toolbar = DebugToolbarExtension(app)
 
 if __name__ == "__main__":
     app.run(debug=True)
